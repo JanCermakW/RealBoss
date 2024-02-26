@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="row">
-        <h1>List všech uživatelů</h1>
+        <h1>List všech zákazníků</h1>
     </div>
     <div class="row">
         <div class="col-lg-3">
@@ -32,7 +32,6 @@
             <td th:text="${user.lastName}"></td>
             <td th:text="${user.email}"></td>
             <td>
-                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-primary">Upravit</a>
                 <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Smazat</a>
             </td>
         </tr>
