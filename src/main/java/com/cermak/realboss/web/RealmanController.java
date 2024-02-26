@@ -8,10 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,6 +52,30 @@ public class RealmanController {
 
         // Create a user relation between the logged-in realman and the newly added user
         userRelationService.createRelation(realman, newUser);
+
+        return "redirect:/realman/users";
+    }
+
+    @GetMapping("/users/delete/{id}")
+    public String deleteUserRelation(@PathVariable Long id) {
+        userRelationService.deleteRelationsByUserId(id);
+        return "redirect:/realman/users";
+    }
+
+    @PostMapping("/createRelation")
+    public String createRelation(@ModelAttribute User newUser, Model model) {
+        // Get currently logged-in user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        User realman = userService.getUserByEmail(currentPrincipalName);
+
+        User user = userService.getUserByEmail(newUser.getEmail());
+
+        if (realman != null && user != null) {
+            // Create a user relation between the logged-in realman and the chosen user
+            userRelationService.createRelation(realman, user);
+        }
 
         return "redirect:/realman/users";
     }

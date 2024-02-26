@@ -28,8 +28,16 @@ public class User {
     )
     private Collection<Role> roles;
 
+    private String phone;
 
-    @OneToMany(mappedBy = "user")
+    private String city;
+
+    @Column(name = "post_num")
+    private String postNum;
+
+    private String street;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRelation> userRelations;
 
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
@@ -40,12 +48,16 @@ public class User {
         this.roles = roles;
     }
 
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles, List<UserRelation> userRelations) {
+    public User(String firstName, String lastName, String email, String password, Collection<Role> roles, String phone, String city, String postNum, String street, List<UserRelation> userRelations) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.phone = phone;
+        this.city = city;
+        this.postNum = postNum;
+        this.street = street;
         this.userRelations = userRelations;
     }
 
@@ -107,5 +119,37 @@ public class User {
 
     public void setUserRelations(List<UserRelation> userRelations) {
         this.userRelations = userRelations;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPostNum() {
+        return postNum;
+    }
+
+    public void setPostNum(String postNum) {
+        this.postNum = postNum;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }

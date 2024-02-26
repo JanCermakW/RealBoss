@@ -3,7 +3,9 @@ package com.cermak.realboss.service;
 import com.cermak.realboss.exception.UserNotFoundException;
 import com.cermak.realboss.model.Role;
 import com.cermak.realboss.model.User;
+import com.cermak.realboss.model.UserRelation;
 import com.cermak.realboss.repository.RoleRepository;
+import com.cermak.realboss.repository.UserRelationRepository;
 import com.cermak.realboss.repository.UserRepository;
 import com.cermak.realboss.web.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserRelationRepository userRelationRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 

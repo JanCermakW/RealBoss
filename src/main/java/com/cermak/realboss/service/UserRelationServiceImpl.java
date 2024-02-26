@@ -3,6 +3,7 @@ package com.cermak.realboss.service;
 import com.cermak.realboss.model.User;
 import com.cermak.realboss.model.UserRelation;
 import com.cermak.realboss.repository.UserRelationRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,12 @@ public class UserRelationServiceImpl implements UserRelationService{
     public List<User> getRealmansByUser(User user) {
         List<UserRelation> relations = userRelationRepository.findByUser(user);
         return relations.stream().map(UserRelation::getRealman).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void deleteRelationsByUserId(Long userId) {
+        userRelationRepository.deleteByUserId(userId);
     }
 
 }

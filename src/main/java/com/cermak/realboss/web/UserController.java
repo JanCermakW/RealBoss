@@ -33,7 +33,6 @@ public class UserController {
     @GetMapping("/admin/users/edit/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-
         // Get all roles to populate in the form
         List<Role> allRoles = roleService.getAllRoles();
         model.addAttribute("allRoles", allRoles);
@@ -42,7 +41,7 @@ public class UserController {
 
     @PostMapping("/admin/users/{id}")
     public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user, @RequestParam("roles") List<Long> roleIds , Model model) {
-        //get student from db
+        //get user from db
         User existingUser = userService.getUserById(id);
         existingUser.setId(user.getId());
         existingUser.setFirstName(user.getFirstName());

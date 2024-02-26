@@ -5,6 +5,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header">
     <div class="container-fluid">
+        <img src="/img/logo.png" alt="" style="height: 80px"/>
         <a class="navbar-brand" href="/">RealBoss</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,9 +31,10 @@
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="hledat" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Hledat</button>
+                <button class="btn btn-outline-primary" type="submit">Hledat</button>
             </form>
             <a sec:authorize="isAuthenticated()" class="btn btn-outline-danger m-2" th:href="@{/logout}">Odhlásit se</a>
+            <a sec:authorize="isAuthenticated()" class="btn btn-outline-primary m-2" th:href="@{/user}"><i class="fa-solid fa-user"></i></a>
         </div>
     </div>
 </nav>
