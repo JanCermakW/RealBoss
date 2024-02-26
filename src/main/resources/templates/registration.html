@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="fragments/head"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    úspěšně jste se zaregistrovali do naší aplikace, Díky!
+                </div>
+            </div>
+
+            <h1>Registrace</h1>
+            <form th:action="@{/registration}" method="post" th:object="${user}">
+                <div class="form-group">
+                    <label class="control-label" for="firstName">
+                        Jméno
+                    </label>
+                    <input id="firstName" class="form-control" th:field="*{firstName}" required autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">
+                        Příjmení
+                    </label>
+                    <input id="lastName" class="form-control" th:field="*{lastName}" required autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="email">
+                        Email
+                    </label>
+                    <input id="email" class="form-control" th:field="*{email}" required autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="password">
+                        Heslo
+                    </label>
+                    <input id="password" class="form-control" type="password" th:field="*{password}" required autofocus="autofocus">
+                </div>
+
+                <div class="form-group">
+                   <button type="submit" class="btn btn-success mt-2">Registrovat se</button>
+                    <span class="mt-2">Už jste registrováni ? <a href="/" th:href="@{/login}">Přihlašte se zde</a> </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

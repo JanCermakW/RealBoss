@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All users</title>
+    <div th:replace="fragments/head"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <div class="row">
+        <h1>List všech uživatelů</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <a data-toggle="modal" data-target="#addUserModal" class="btn btn-primary btn-sm mb-3">Přidat uživatele</a>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Jméno</th>
+            <th scope="col">Příjmení</th>
+            <th scope="col">Email</th>
+            <th scope="col">Akce</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "user: ${connectedUsers}">
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-primary">Upravit</a>
+                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Smazat</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/realman/addUser}" method="post" th:object="${newUser}">
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">
+                            Jméno
+                        </label>
+                        <input id="firstName" class="form-control" th:field="*{firstName}" required autofocus="autofocus">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="lastName">
+                            Příjmení
+                        </label>
+                        <input id="lastName" class="form-control" th:field="*{lastName}" required autofocus="autofocus">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="email">
+                            Email
+                        </label>
+                        <input id="email" class="form-control" th:field="*{email}" required autofocus="autofocus">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="password">
+                            Heslo
+                        </label>
+                        <input id="password" class="form-control" type="password" th:field="*{password}" required autofocus="autofocus">
+                    </div>
+
+                    <input type="submit" class="btn btn-primary mt-2" value="Přidat uživatele">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
