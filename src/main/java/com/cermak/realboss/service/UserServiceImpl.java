@@ -100,6 +100,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
@@ -111,5 +116,10 @@ public class UserServiceImpl implements UserService{
 
         user.setRoles(newRoles);
         userRepository.save(user);
+    }
+
+    @Override
+    public User saveUserStartup(User user) {
+        return userRepository.save(user);
     }
 }

@@ -10,4 +10,8 @@ public interface RoleService{
     List<Role> getRolesById(List<Long> id);
 
     List<Role> getAllRoles();
+
+    boolean existsByName(String name);
+
+    void saveRole(Role role);
 }

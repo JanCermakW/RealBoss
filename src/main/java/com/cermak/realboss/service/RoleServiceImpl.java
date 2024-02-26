@@ -22,4 +22,14 @@ public class RoleServiceImpl implements RoleService{
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return roleRepository.existsByName(name);
+    }
+
+    @Override
+    public void saveRole(Role role) {
+        roleRepository.save(role);
+    }
 }
