@@ -66,7 +66,7 @@ public class UserAccountController {
 
         // Save the file and update the user's profile picture path
         String profilePicturePath = fileStorageService.storeFile(file);
-        currentUser.setProfilePicturePath("img/" + profilePicturePath);
+        currentUser.setProfilePicturePath("/img/" + profilePicturePath);
 
         // Save the updated user
         userService.updateUser(currentUser);

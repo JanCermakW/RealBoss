@@ -24,18 +24,22 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">Jméno</th>
                         <th scope="col">Příjmení</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Telefon</th>
                         <th scope="col">Akce</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each = "user: ${connectedUsers}">
-                        <td th:text="${user.firstName}"></td>
-                        <td th:text="${user.lastName}"></td>
-                        <td th:text="${user.email}"></td>
-                        <td>
+                        <td><img th:src="${user.profilePicturePath}" alt="ProfPic" width="60"></td>
+                        <td class="align-middle" th:text="${user.firstName}"></td>
+                        <td class="align-middle" th:text="${user.lastName}"></td>
+                        <td class="align-middle" th:text="${user.email}"></td>
+                        <td class="align-middle" th:text="${user.phone}"></td>
+                        <td class="align-middle">
                             <a th:href="@{/realman/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Smazat</a>
                         </td>
                     </tr>

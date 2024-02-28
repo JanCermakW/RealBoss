@@ -28,26 +28,26 @@
                         <th scope="col">Cena</th>
                         <th scope="col">Město</th>
                         <th scope="col">Ulice</th>
-                        <th scope="col">Popis</th>
                         <th scope="col">Přídat zákazníka k nemovistosti</th>
                         <th scope="col">Akce</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each = "property: ${userProperties}">
-                        <td><img th:src="${property.mainPicturePath}" alt="MainPic" width="90"></td>
-                        <td th:text="${property.name}"></td>
-                        <td th:text="${property.price}"></td>
-                        <td th:text="${property.city}"></td>
-                        <td th:text="${property.street}"></td>
-                        <td th:text="${property.description}"></td>
-                        <td>
+                        <td class="align-middle"><img th:src="${property.mainPicturePath}" alt="MainPic" width="60"></td>
+                        <td class="align-middle" th:text="${property.name}"></td>
+                        <td class="align-middle" th:text="${property.price}"></td>
+                        <td class="align-middle" th:text="${property.city}"></td>
+                        <td class="align-middle" th:text="${property.street}"></td>
+                        <td class="align-middle">
                             <form style="display: flex; gap: 5px" th:action="@{/realman/properties/addUserProperty/{id} (id=${property.id})}" method="post" th:object="${newUser}">
                                 <input style="width: 13rem; display: flex" id="emailExist" class="form-control" name="emailExist" required autofocus="autofocus" th:field="*{email}" type="email" th:placeholder="${property.getCustomer() != null ? property.getCustomer().getEmail() : ''}">
                                 <input  style="display: flex" type="submit" class="btn btn-primary " value="Přidat Zákazníka">
                             </form>
                         </td>
-                        <td>
+                        <td class="align-middle" style="min-width: 18rem">
+                            <a th:href="@{/realman/properties/view/{id} (id=${property.id})}" class="btn btn-secondary">Zobrazit</a>
+                            <a th:href="@{/realman/properties/edit/{id} (id=${property.id})}" class="btn btn-primary">Upravit</a>
                             <a th:href="@{/realman/properties/delete/{id} (id=${property.id})}" class="btn btn-danger">Smazat</a>
                         </td>
                     </tr>
@@ -103,7 +103,7 @@
                         <label class="control-label" for="desc">
                             Popis
                         </label>
-                        <input id="desc" class="form-control" th:field="*{description}" required autofocus="autofocus">
+                        <textarea id="desc" class="form-control" th:field="*{description}" required autofocus="autofocus"></textarea>
                     </div>
                     <div class="form-group mb-2 mt-2">
                         <label class="control-label" for="img">

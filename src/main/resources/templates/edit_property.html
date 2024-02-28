@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upravit nemovitost</title>
+    <div th:replace="fragments/head"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+            <h1>Upravit nemovitost</h1>
+            <form th:action="@{/realman/properties/edit/{id} (id=${property.id})}" method="post" th:object="${property}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="control-label" for="name">
+                        Název
+                    </label>
+                    <input id="name" class="form-control" th:field="*{name}" required autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="price">
+                        Cena
+                    </label>
+                    <input id="price" class="form-control" th:field="*{price}" required autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="city">
+                        Město
+                    </label>
+                    <input id="city" class="form-control" th:field="*{city}" required autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="street">
+                        Ulice
+                    </label>
+                    <input id="street" class="form-control" th:field="*{street}" required autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="postnum">
+                        PSČ
+                    </label>
+                    <input id="postnum" class="form-control" th:field="*{postNum}" required autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="desc">
+                        Popis
+                    </label>
+                    <textarea id="desc" class="form-control" th:field="*{description}" required autofocus="autofocus"></textarea>
+                </div>
+                <div class="form-group mb-2 mt-2">
+                    <label class="control-label" for="img">
+                        Hlavní obrázek
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input id="img"  type="file" name="file" accept="image/*">
+                </div>
+
+                <input type="submit" class="btn btn-primary mt-2" value="Upravit nemovitost">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

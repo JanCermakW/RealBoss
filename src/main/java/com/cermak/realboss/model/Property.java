@@ -25,6 +25,21 @@ public class Property {
 
     private String MainPicturePath;
 
+    public Property(String name, Long price, String city, String postNum, String street, String description, User realman, User customer, String mainPicturePath) {
+        this.name = name;
+        this.price = price;
+        this.city = city;
+        this.postNum = postNum;
+        this.street = street;
+        this.description = description;
+        this.realman = realman;
+        this.customer = customer;
+        MainPicturePath = mainPicturePath;
+    }
+
+    public Property() {
+    }
+
     public Long getId() {
         return id;
     }

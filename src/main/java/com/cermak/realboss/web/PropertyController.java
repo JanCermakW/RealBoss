@@ -1,6 +1,7 @@
 package com.cermak.realboss.web;
 
 import com.cermak.realboss.model.Property;
+import com.cermak.realboss.model.Role;
 import com.cermak.realboss.model.User;
 import com.cermak.realboss.service.FileStorageService;
 import com.cermak.realboss.service.PropertyService;
@@ -62,7 +63,7 @@ public class PropertyController {
 
         // Save the file and update the user's profile picture path
         String profilePicturePath = fileStorageService.storeFile(file);
-        property.setMainPicturePath("img/" + profilePicturePath);
+        property.setMainPicturePath("/img/" + profilePicturePath);
 
         // Save the property
         propertyService.saveProperty(property);
@@ -83,6 +84,33 @@ public class PropertyController {
     @GetMapping("/properties/delete/{id}")
     public String deleteProperty(@PathVariable Long id) {
         propertyService.deletPropertyById(id);
+        return "redirect:/realman/properties";
+    }
+
+    @GetMapping("/properties/edit/{id}")
+    public String editPropertyForm(@PathVariable Long id, Model model) {
+        model.addAttribute("property", propertyService.getPropertyById(id));
+        return "edit_property";
+    }
+
+    @PostMapping("/properties/edit/{id}")
+    public String updateProperty(@PathVariable Long id, @ModelAttribute("property") Property property, @RequestParam("file") MultipartFile file,Model model) {
+        //get user from db
+        Property existingProperty = propertyService.getPropertyById(id);
+        existingProperty.setName(property.getName());
+        existingProperty.setCity(property.getCity());
+        existingProperty.setDescription(property.getDescription());
+        existingProperty.setPostNum(property.getPostNum());
+        existingProperty.setPrice(property.getPrice());
+        existingProperty.setStreet(property.getStreet());
+
+        if (!file.isEmpty()) {
+            String profilePicturePath = fileStorageService.storeFile(file);
+            existingProperty.setMainPicturePath("/img/" + profilePicturePath);
+        }
+
+
+        propertyService.saveProperty(existingProperty);
         return "redirect:/realman/properties";
     }
 }
