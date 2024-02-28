@@ -1,8 +1,8 @@
 package com.cermak.realboss.model;
 
 import jakarta.persistence.*;
-import org.springframework.context.annotation.Primary;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,9 +36,13 @@ public class User {
     private String postNum;
 
     private String street;
+    private String profilePicturePath;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRelation> userRelations;
+
+    @OneToMany(mappedBy = "realman", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Property> properties = new ArrayList<>();
 
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
         this.firstName = firstName;
@@ -48,7 +52,7 @@ public class User {
         this.roles = roles;
     }
 
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles, String phone, String city, String postNum, String street, List<UserRelation> userRelations) {
+    public User(String firstName, String lastName, String email, String password, Collection<Role> roles, String phone, String city, String postNum, String street, String profilePicturePath, List<UserRelation> userRelations) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -58,6 +62,7 @@ public class User {
         this.city = city;
         this.postNum = postNum;
         this.street = street;
+        this.profilePicturePath = profilePicturePath;
         this.userRelations = userRelations;
     }
 
@@ -151,5 +156,21 @@ public class User {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<Property> properties) {
+        this.properties = properties;
     }
 }

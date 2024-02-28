@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="/img/logo.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                            <img th:src="${user.getProfilePicturePath()}" alt="ProfilePic" class="rounded-circle p-1 bg-primary" width="110">
                             <div class="mt-3">
                                 <h4 th:text="${user.firstName} + ' ' + ${user.lastName}"></h4>
                                 <p class="text-secondary mb-1">TODO Full Stack Developer</p>
@@ -106,6 +106,16 @@
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success mt-2">Upravit</button>
+                            </div>
+                        </form>
+                        <br>
+                        <form th:action="@{/user/upload}" method="post" enctype="multipart/form-data">
+                            <h3 class="mb-3">Změnit profilový obrázek</h3>
+                            <div class="form-group mb-2">
+                                <input  type="file" name="file" accept="image/*">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success mt-2">Náhrát obrázek</button>
                             </div>
                         </form>
                     </div>

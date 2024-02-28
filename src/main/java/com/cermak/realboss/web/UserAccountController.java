@@ -2,6 +2,7 @@ package com.cermak.realboss.web;
 
 import com.cermak.realboss.model.Role;
 import com.cermak.realboss.model.User;
+import com.cermak.realboss.service.FileStorageService;
 import com.cermak.realboss.service.RoleService;
 import com.cermak.realboss.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -20,6 +23,9 @@ public class UserAccountController {
     private RoleService roleService;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @GetMapping("/user")
     public String showUserDetails(Model model) {
@@ -51,5 +57,20 @@ public class UserAccountController {
         //save updated user objc
         userService.updateUser(currentUser);
         return "redirect:/user?success";
+    }
+
+    @PostMapping("/user/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, Principal principal) {
+        // Get the currently logged-in user
+        User currentUser = userService.getUserByEmail(principal.getName());
+
+        // Save the file and update the user's profile picture path
+        String profilePicturePath = fileStorageService.storeFile(file);
+        currentUser.setProfilePicturePath("img/" + profilePicturePath);
+
+        // Save the updated user
+        userService.updateUser(currentUser);
+
+        return "redirect:/user";
     }
 }
