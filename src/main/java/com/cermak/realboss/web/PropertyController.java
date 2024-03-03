@@ -40,9 +40,14 @@ public class PropertyController {
         List<Property> userProperties = propertyService.getPropertiesByRealman(currentUser);
 
         model.addAttribute("userProperties", userProperties);
-        model.addAttribute("newProperty", new Property());
         model.addAttribute("newUser", new User());
         return "properties";
+    }
+
+    @GetMapping("/properties/create")
+    public String createProperty(Model model) {
+        model.addAttribute("newProperty", new Property());
+        return "create_property";
     }
 
     @PostMapping("/properties/create")
@@ -61,7 +66,6 @@ public class PropertyController {
 
         property.setRealman(currentUser);
 
-        // Save the file and update the user's profile picture path
         String profilePicturePath = fileStorageService.storeFile(file);
         property.setMainPicturePath("/img/" + profilePicturePath);
 
@@ -95,7 +99,7 @@ public class PropertyController {
 
     @PostMapping("/properties/edit/{id}")
     public String updateProperty(@PathVariable Long id, @ModelAttribute("property") Property property, @RequestParam("file") MultipartFile file,Model model) {
-        //get user from db
+
         Property existingProperty = propertyService.getPropertyById(id);
         existingProperty.setName(property.getName());
         existingProperty.setCity(property.getCity());
@@ -103,6 +107,58 @@ public class PropertyController {
         existingProperty.setPostNum(property.getPostNum());
         existingProperty.setPrice(property.getPrice());
         existingProperty.setStreet(property.getStreet());
+
+        if (!property.getPriceNote().isEmpty()) {
+            existingProperty.setPriceNote(property.getPriceNote());
+        }
+
+        if (!property.getBuilding().isEmpty()) {
+            existingProperty.setBuilding(property.getBuilding());
+        }
+
+        if (!property.getObjectState().isEmpty()) {
+            existingProperty.setObjectState(property.getObjectState());
+        }
+
+        if (!property.getObjectPlacement().isEmpty()) {
+            existingProperty.setObjectPlacement(property.getObjectPlacement());
+        }
+
+        if (property.getUsableArea() != null) {
+            existingProperty.setUsableArea(property.getUsableArea());
+        }
+
+        if (property.getFloorArea() != null) {
+            existingProperty.setFloorArea(property.getFloorArea());
+        }
+
+        if (!property.getFloor().isEmpty()) {
+            existingProperty.setFloor(property.getFloor());
+        }
+
+        if (property.getBasement() != null) {
+            existingProperty.setBasement(property.getBasement());
+        }
+
+        if (property.getApprovalYear() != null) {
+            existingProperty.setApprovalYear(property.getApprovalYear());
+        }
+
+        if (property.getReconstructionYear() != null) {
+            existingProperty.setReconstructionYear(property.getReconstructionYear());
+        }
+
+        if (!property.getWater().isEmpty()) {
+            existingProperty.setWater(property.getWater());
+        }
+
+        if (!property.getElectricity().isEmpty()) {
+            existingProperty.setElectricity(property.getElectricity());
+        }
+
+        if (!property.getCommunicationRoad().isEmpty()) {
+            existingProperty.setCommunicationRoad(property.getCommunicationRoad());
+        }
 
         if (!file.isEmpty()) {
             String profilePicturePath = fileStorageService.storeFile(file);
@@ -112,5 +168,11 @@ public class PropertyController {
 
         propertyService.saveProperty(existingProperty);
         return "redirect:/realman/properties";
+    }
+
+    @GetMapping("/properties/view/{id}")
+    public String viewProperty(@PathVariable Long id, Model model) {
+        model.addAttribute("property", propertyService.getPropertyById(id));
+        return "view_property";
     }
 }

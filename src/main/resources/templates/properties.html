@@ -14,7 +14,7 @@
             <h1>List všech nemovitostí</h1>
         </div>
         <div class="col-12">
-            <a data-toggle="modal" data-target="#addPropertyModal" class="btn btn-primary btn-sm mb-3 p-2 fw-bold">Přidat nemovitost</a>
+            <a th:href="@{/realman/properties/create}" class="btn btn-primary btn-sm mb-3 p-2 fw-bold">Přidat nemovitost</a>
         </div>
     </div>
     <div class="card">
@@ -53,69 +53,6 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="addPropertyModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">Přidat nemovitost</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form th:action="@{/realman/properties/create}" method="post" th:object="${newProperty}" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label class="control-label" for="name">
-                            Název
-                        </label>
-                        <input id="name" class="form-control" th:field="*{name}" required autofocus="autofocus">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="price">
-                            Cena
-                        </label>
-                        <input id="price" class="form-control" th:field="*{price}" required autofocus="autofocus">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="city">
-                            Město
-                        </label>
-                        <input id="city" class="form-control" th:field="*{city}" required autofocus="autofocus">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="street">
-                            Ulice
-                        </label>
-                        <input id="street" class="form-control" th:field="*{street}" required autofocus="autofocus">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="postnum">
-                            PSČ
-                        </label>
-                        <input id="postnum" class="form-control" th:field="*{postNum}" required autofocus="autofocus">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="desc">
-                            Popis
-                        </label>
-                        <textarea id="desc" class="form-control" th:field="*{description}" required autofocus="autofocus"></textarea>
-                    </div>
-                    <div class="form-group mb-2 mt-2">
-                        <label class="control-label" for="img">
-                            Hlavní obrázek
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <input id="img"  type="file" name="file" accept="image/*">
-                    </div>
-
-                    <input type="submit" class="btn btn-primary mt-2" value="Přidat nemovitost">
-                </form>
             </div>
         </div>
     </div>

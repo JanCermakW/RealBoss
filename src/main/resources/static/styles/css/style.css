@@ -36,3 +36,16 @@ table {
 .me-2 {
     margin-right: .5rem!important;
 }
+
+/* property attributes */
+.propertyAttrLabel {
+    color: gray;
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.propertyAttrVal {
+    display: inline-block;
+    width: 50%;
+}

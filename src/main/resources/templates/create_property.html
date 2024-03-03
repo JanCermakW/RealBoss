@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upravit nemovitost</title>
+    <title>Přidat nemovitost</title>
     <div th:replace="fragments/head"></div>
 </head>
 <body>
@@ -10,8 +10,8 @@
 </div>
 
 <div class="container mt-5">
-    <h1>Upravit nemovitost</h1>
-    <form th:action="@{/realman/properties/edit/{id} (id=${property.id})}" method="post" th:object="${property}" enctype="multipart/form-data">
+    <h1>Přidat nemovitost</h1>
+    <form th:action="@{/realman/properties/create}" method="post" th:object="${newProperty}" enctype="multipart/form-data">
         <div class="container">
             <div class="row mt-3">
                 <div class="col">
@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        <input type="submit" class="btn btn-primary mt-5 mb-5 p-3" value="Upravit nemovitost">
+        <input type="submit" class="btn btn-primary mt-5 mb-5 p-3" value="Přidat nemovitost">
     </form>
 </div>
 

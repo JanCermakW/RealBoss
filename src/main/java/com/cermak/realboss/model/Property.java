@@ -14,6 +14,7 @@ public class Property {
     private String postNum;
 
     private String street;
+    @Column(columnDefinition="TEXT")
     private String description;
     @ManyToOne
     @JoinColumn(name = "realman_id")
@@ -24,6 +25,20 @@ public class Property {
     private User customer;
 
     private String MainPicturePath;
+
+    private String priceNote;
+    private String building;
+    private String objectState;
+    private String objectPlacement;
+    private Long usableArea;
+    private Long floorArea;
+    private String floor;
+    private Long basement;
+    private Long approvalYear;
+    private Long reconstructionYear;
+    private String water;
+    private String electricity;
+    private String communicationRoad;
 
     public Property(String name, Long price, String city, String postNum, String street, String description, User realman, User customer, String mainPicturePath) {
         this.name = name;
@@ -118,5 +133,109 @@ public class Property {
 
     public void setMainPicturePath(String mainPicturePath) {
         MainPicturePath = mainPicturePath;
+    }
+
+    public String getPriceNote() {
+        return priceNote;
+    }
+
+    public void setPriceNote(String priceNote) {
+        this.priceNote = priceNote;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
+
+    public String getObjectState() {
+        return objectState;
+    }
+
+    public void setObjectState(String objectState) {
+        this.objectState = objectState;
+    }
+
+    public String getObjectPlacement() {
+        return objectPlacement;
+    }
+
+    public void setObjectPlacement(String objectPlacement) {
+        this.objectPlacement = objectPlacement;
+    }
+
+    public Long getUsableArea() {
+        return usableArea;
+    }
+
+    public void setUsableArea(Long usableArea) {
+        this.usableArea = usableArea;
+    }
+
+    public Long getFloorArea() {
+        return floorArea;
+    }
+
+    public void setFloorArea(Long floorArea) {
+        this.floorArea = floorArea;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public Long getBasement() {
+        return basement;
+    }
+
+    public void setBasement(Long basement) {
+        this.basement = basement;
+    }
+
+    public Long getApprovalYear() {
+        return approvalYear;
+    }
+
+    public void setApprovalYear(Long approvalYear) {
+        this.approvalYear = approvalYear;
+    }
+
+    public Long getReconstructionYear() {
+        return reconstructionYear;
+    }
+
+    public void setReconstructionYear(Long reconstructionYear) {
+        this.reconstructionYear = reconstructionYear;
+    }
+
+    public String getWater() {
+        return water;
+    }
+
+    public void setWater(String water) {
+        this.water = water;
+    }
+
+    public String getElectricity() {
+        return electricity;
+    }
+
+    public void setElectricity(String electricity) {
+        this.electricity = electricity;
+    }
+
+    public String getCommunicationRoad() {
+        return communicationRoad;
+    }
+
+    public void setCommunicationRoad(String communicationRoad) {
+        this.communicationRoad = communicationRoad;
     }
 }
