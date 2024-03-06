@@ -14,7 +14,7 @@
     <form th:action="@{/realman/properties/create}" method="post" th:object="${newProperty}" enctype="multipart/form-data">
         <div class="container">
             <div class="row mt-3">
-                <div class="col">
+                <div class="col-md-6">
                     <h3>Základní info</h3>
                     <div class="form-group mt-2">
                         <label class="control-label" for="name">
@@ -36,7 +36,7 @@
                         <textarea id="desc" class="form-control" th:field="*{description}" required autofocus="autofocus"></textarea>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md-6">
                     <h3>Adresa</h3>
                     <div class="form-group mt-2">
                         <label class="control-label" for="city">
@@ -61,7 +61,7 @@
             <div class="row mt-3">
                 <h3>Další info</h3>
                 <p>*Tyto položky nejsou povinné</p>
-                <div class="col">
+                <div class="col-md-6">
                     <div class="form-group mt-2">
                         <label class="control-label" for="priceNote">
                             Poznámka k ceně
@@ -81,7 +81,7 @@
                         <input id="objState" class="form-control" th:field="*{objectState}" autofocus="autofocus">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md-6">
                     <div class="form-group mt-2">
                         <label class="control-label" for="objPlacement">
                             Umístění objektu
@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-md-6">
                     <div class="form-group mt-2">
                         <label class="control-label" for="floor">
                             Podlaží
@@ -123,7 +123,7 @@
                         <input id="approvalYear" class="form-control" th:field="*{approvalYear}" autofocus="autofocus">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md-6">
                     <div class="form-group mt-2">
                         <label class="control-label" for="reconstructionYear">
                             Rok rekonstrukce
@@ -145,7 +145,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-6">
                     <div class="form-group mt-2">
                         <label class="control-label" for="commRoad">
                             Komunikace (typ pozemní komunikace)

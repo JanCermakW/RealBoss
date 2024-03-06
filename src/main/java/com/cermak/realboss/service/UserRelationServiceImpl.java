@@ -41,4 +41,9 @@ public class UserRelationServiceImpl implements UserRelationService{
         userRelationRepository.deleteByUserId(userId);
     }
 
+    @Override
+    public long countUsersByRealman(User realman) {
+        return userRelationRepository.countUsersByRealman(realman);
+    }
+
 }

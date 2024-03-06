@@ -13,4 +13,6 @@ public interface UserRelationService {
     List<User> getRealmansByUser(User user);
 
     void deleteRelationsByUserId(Long userId);
+
+    long countUsersByRealman(User realman);
 }

@@ -39,4 +39,9 @@ public class PropertyServiceImpl implements PropertyService{
     public void deletPropertyById(Long id) {
         propertyRepository.deleteById(id);
     }
+
+    @Override
+    public long getPropertyCountForUser(User user) {
+        return propertyRepository.countByRealman(user);
+    }
 }

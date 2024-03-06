@@ -9,9 +9,163 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container mt-5">
-    <h1>Vítejte v naší apce</h1>
-    Welcome <span sec:authentication="principal.username">User</span>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row card p-2">
+                <h3>Nadcházející aktivity</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <label class="propertyAttrLabel">Aktivita 1</label>
+                        <span class="propertyAttrVal">Text k ativitě</span>
+                    </li>
+                    <li class="list-group-item">
+                        <label class="propertyAttrLabel">Aktivita 1</label>
+                        <span class="propertyAttrVal">Text k ativitě</span>
+                    </li>
+                    <li class="list-group-item">
+                        <label class="propertyAttrLabel">Aktivita 1</label>
+                        <span class="propertyAttrVal">Text k ativitě</span>
+                    </li>
+                    <li class="list-group-item">
+                        <label class="propertyAttrLabel">Aktivita 1</label>
+                        <span class="propertyAttrVal">Text k ativitě</span>
+                    </li>
 
+                </ul>
+            </div>
+            <div class="row card p-2">
+                <h3>Zprávy</h3>
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <img src="/img/logo.png" alt="profPic" width="50">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row fw-bold">Jmeno uzivatele</div>
+                        <div class="row">Zprava uzivatele sasdsadasdasdasdasdas  dasdasds asdasdasd</div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <img src="/img/logo.png" alt="profPic" width="50">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row fw-bold">Jmeno uzivatele</div>
+                        <div class="row">Zprava uzivatele sasdsadasdasdasdasdas  dasdasds asdasdasd</div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <img src="/img/logo.png" alt="profPic" width="50">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row fw-bold">Jmeno uzivatele</div>
+                        <div class="row">Zprava uzivatele sasdsadasdasdasdasdas  dasdasds asdasdasd</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Aktivní nemovitosti</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${propertyCount}"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-building fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Aktivní zákazníci</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${customersCount}"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-user fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        Aktivity na dnešek</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">25</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Nepřečtené zrpávy</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-6">
+                    <div class="card p-2">
+                        <h3>Nemovitosti</h3>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Název</th>
+                                    <th scope="col">Cena</th>
+                                    <th scope="col">Město</th>
+                                    <th scope="col">Ulice</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each = "property: ${userProperties}">
+                                    <td class="align-middle"><img th:src="${property.mainPicturePath}" alt="MainPic" width="60"></td>
+                                    <td class="align-middle" th:text="${property.name}"></td>
+                                    <td class="align-middle" th:text="${property.price}"></td>
+                                    <td class="align-middle" th:text="${property.city}"></td>
+                                    <td class="align-middle" th:text="${property.street}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>

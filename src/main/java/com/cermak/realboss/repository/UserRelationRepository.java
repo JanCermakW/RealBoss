@@ -13,4 +13,6 @@ public interface UserRelationRepository extends JpaRepository<UserRelation, Long
     List<UserRelation> findByUser(User user);
 
     void deleteByUserId(Long userId);
+
+    long countUsersByRealman(User realman);
 }
