@@ -41,7 +41,12 @@ public class PropertyServiceImpl implements PropertyService{
     }
 
     @Override
-    public long getPropertyCountForUser(User user) {
-        return propertyRepository.countByRealman(user);
+    public long getPropertyCountForRealman(User realman) {
+        return propertyRepository.countByRealman(realman);
+    }
+
+    @Override
+    public long getPropertyCountForCustomer(User customer) {
+        return propertyRepository.countByCustomer(customer);
     }
 }

@@ -36,14 +36,20 @@ public class MainController {
     public String home(Model model, Principal principal) {
         User currentUser = userService.getUserByEmail(principal.getName());
 
-        long propertyCount = propertyService.getPropertyCountForUser(currentUser);
+        long propertyCount = propertyService.getPropertyCountForRealman(currentUser);
         model.addAttribute("propertyCount", propertyCount);
+
+        long propertyCountCustomer = propertyService.getPropertyCountForCustomer(currentUser);
+        model.addAttribute("propertyCountCustomer", propertyCountCustomer);
 
         long customersCount = userRelationService.countUsersByRealman(currentUser);
         model.addAttribute("customersCount", customersCount);
         List<Property> userProperties = propertyService.getPropertiesByRealman(currentUser);
-
         model.addAttribute("userProperties", userProperties);
+
+        List<Property> customerProperties = propertyService.getPropertiesByCustomer(currentUser);
+        model.addAttribute("customerProperties", customerProperties);
+
         return "index";
     }
 

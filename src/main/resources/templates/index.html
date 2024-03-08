@@ -2,7 +2,7 @@
 <html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Home page</title>
+    <title>Domovská stránka | RealBoss</title>
     <div th:replace="fragments/head"></div>
 </head>
 <body>
@@ -30,7 +30,6 @@
                         <label class="propertyAttrLabel">Aktivita 1</label>
                         <span class="propertyAttrVal">Text k ativitě</span>
                     </li>
-
                 </ul>
             </div>
             <div class="row card p-2">
@@ -73,7 +72,8 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         Aktivní nemovitosti</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${propertyCount}"></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${propertyCount}" sec:authorize="hasRole('ROLE_REALMAN') or hasRole('ROLE_ADMIN')"></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${propertyCountCustomer}" sec:authorize="hasRole('ROLE_USER')"></div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fa-solid fa-building fa-2x text-gray-300"></i>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div class="col-xl-3 col-md-6 mb-4" sec:authorize="hasRole('ROLE_REALMAN') or hasRole('ROLE_ADMIN')">
                     <div class="card shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -135,9 +135,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" sec:authorize="hasRole('ROLE_REALMAN') or hasRole('ROLE_ADMIN')">
                 <div class="col-xl-12 col-md-6">
-                    <div class="card p-2">
+                    <div class="card p-3">
                         <h3>Nemovitosti</h3>
                         <div class="table-responsive">
                             <table class="table table-striped">
@@ -148,6 +148,7 @@
                                     <th scope="col">Cena</th>
                                     <th scope="col">Město</th>
                                     <th scope="col">Ulice</th>
+                                    <th scope="col">Akce</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -157,6 +158,9 @@
                                     <td class="align-middle" th:text="${property.price}"></td>
                                     <td class="align-middle" th:text="${property.city}"></td>
                                     <td class="align-middle" th:text="${property.street}"></td>
+                                    <td class="align-middle">
+                                        <a th:href="@{/realman/properties/view/{id} (id=${property.id})}" class="btn btn-secondary">Zobrazit</a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -164,6 +168,41 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row" sec:authorize="hasRole('ROLE_USER')">
+                <div class="col-xl-12 col-md-6">
+                    <div class="card p-3">
+                        <h3>Nemovitosti</h3>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Název</th>
+                                    <th scope="col">Cena</th>
+                                    <th scope="col">Město</th>
+                                    <th scope="col">Ulice</th>
+                                    <th scope="col">Akce</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each = "customerProperty: ${customerProperties}">
+                                    <td class="align-middle"><img th:src="${customerProperty.mainPicturePath}" alt="MainPic" width="60"></td>
+                                    <td class="align-middle" th:text="${customerProperty.name}"></td>
+                                    <td class="align-middle" th:text="${customerProperty.price}"></td>
+                                    <td class="align-middle" th:text="${customerProperty.city}"></td>
+                                    <td class="align-middle" th:text="${customerProperty.street}"></td>
+                                    <td class="align-middle">
+                                        <a th:href="@{/realman/properties/view/{id} (id=${customerProperty.id})}" class="btn btn-secondary">Zobrazit</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

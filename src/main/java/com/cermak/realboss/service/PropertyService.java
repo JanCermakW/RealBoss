@@ -14,5 +14,7 @@ public interface PropertyService {
 
     void deletPropertyById(Long id);
 
-    long getPropertyCountForUser(User user);
+    long getPropertyCountForRealman(User realman);
+
+    long getPropertyCountForCustomer(User customer);
 }

@@ -12,4 +12,6 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     List<Property> findByCustomer(User customer);
     long countByRealman(User realman);
+
+    long countByCustomer(User customer);
 }
