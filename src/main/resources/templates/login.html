@@ -15,7 +15,7 @@
             <form th:action="@{/login}" method="post">
                 <!-- error message -->
                 <div th:if="${param.error}">
-                    <div class="alert alert-danger">Špatné heslo nebo jméno!</div>
+                    <div class="alert alert-danger">Máte špatné buď heslo, jméno, nebo nemáte ověřený účet!</div>
                 </div>
                 <!-- logout message -->
                 <div th:if="${param.logout}">
@@ -38,6 +38,7 @@
                 <div class="form-group mt-4 d-flex justify-content-center align-items-start flex-column">
                     <button type="submit" class="btn btn-success">Prihlasit se</button><br>
                     <span>Nejste registrováni ? <a href="/" th:href="@{/registration}">Registrujte se zde</a> </span>
+                    <span class="mt-2">Zapomněli jste heslo ? <a href="/" th:href="@{/forgotPasswd}">Pokračujte zde</a> </span>
                 </div>
 
             </form>

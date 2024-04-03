@@ -7,8 +7,14 @@ import com.cermak.realboss.model.UserRelation;
 import com.cermak.realboss.repository.RoleRepository;
 import com.cermak.realboss.repository.UserRelationRepository;
 import com.cermak.realboss.repository.UserRepository;
+import com.cermak.realboss.web.PasswordGenerator;
 import com.cermak.realboss.web.dto.UserRegistrationDto;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -31,6 +38,8 @@ public class UserServiceImpl implements UserService{
     private UserRelationRepository userRelationRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private JavaMailSender mailSender;
 
     public UserServiceImpl(UserRepository userRepository) {
         super();
@@ -45,6 +54,10 @@ public class UserServiceImpl implements UserService{
                 passwordEncoder.encode(registrationDto.getPassword()),
                 Arrays.asList(roleRepository.findByName("ROLE_USER").get())
         );
+
+        String randomCode = PasswordGenerator.generateRandomPassword(64);
+        user.setVerificationCode(randomCode);
+        user.setEnabled(false);
 
         return userRepository.save(user);
     }
@@ -70,6 +83,9 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("Špatné jméno nebo heslo!");
+        }
+        if (!user.isEnabled()) {
+            throw new DisabledException("Účet není aktivní");
         }
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
@@ -121,5 +137,97 @@ public class UserServiceImpl implements UserService{
     @Override
     public User saveUserStartup(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public String encodePasswd(String passwd) {
+        return passwordEncoder.encode(passwd);
+    }
+
+    @Override
+    public void sendEmail(User user, String content, String subject) throws MessagingException, UnsupportedEncodingException {
+        String toAddress = user.getEmail();
+        String fromAddress = "honzacermak74@gmail.com";
+        String senderName = "Realboss.co";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+
+    }
+
+    @Override
+    public void sendVerificationEmail(User user, String siteURL) throws MessagingException, UnsupportedEncodingException {
+        String content = "Milý [[name]],<br>"
+                + "Kliknutím na odkaz níže ověřte svou registraci:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">OVĚŘIT</a></h3>"
+                + "Děkujeme,<br>"
+                + "Realboss team.";
+        String subject = "Ověřte svůj email - Realboss";
+
+        content = content.replace("[[name]]", user.getFirstName() + " " + user.getLastName());
+        String verifyURL = siteURL + "/registration/verify?code=" + user.getVerificationCode();
+
+        content = content.replace("[[URL]]", verifyURL);
+
+        sendEmail(user, content, subject);
+
+    }
+
+    @Override
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode);
+
+        if (user == null || user.isEnabled()) {
+            return false;
+        } else {
+            user.setVerificationCode(null);
+            user.setEnabled(true);
+            userRepository.save(user);
+
+            return true;
+        }
+    }
+
+    @Override
+    public void sendForgotPasswd(User user, String siteURL) throws MessagingException, UnsupportedEncodingException {
+        String randomCode = PasswordGenerator.generateRandomPassword(64) + user.getEmail();
+        user.setVerificationCode(randomCode);
+        userRepository.save(user);
+
+        String content = "Milý [[name]],<br>"
+                + "Kliknutím na odkaz níže si necháte poslat vygenerované heslo a ihned si ho po přihlášení změňte:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">ZASLAT HESLO</a></h3>"
+                + "Děkujeme,<br>"
+                + "Realboss team.";
+        String subject = "Zapomenuté heslo - Realboss";
+
+        content = content.replace("[[name]]", user.getFirstName() + " " + user.getLastName());
+        String verifyURL = siteURL + "/forgotPasswd/verify?code=" + user.getVerificationCode();
+
+        content = content.replace("[[URL]]", verifyURL);
+
+        sendEmail(user, content, subject);
+    }
+
+    @Override
+    public boolean verifyForgotPasswd(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode);
+
+        if (user == null) {
+            return false;
+        } else {
+            user.setVerificationCode(null);
+            userRepository.save(user);
+
+            return true;
+        }
     }
 }

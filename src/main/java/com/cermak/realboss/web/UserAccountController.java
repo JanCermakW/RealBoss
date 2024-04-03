@@ -39,7 +39,7 @@ public class UserAccountController {
     }
 
     @PostMapping("/user")
-    public String updateUser(@ModelAttribute("user") User user, Model model) {
+    public String updateUser(@ModelAttribute("user") User user) {
         //get user from db
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -72,5 +72,21 @@ public class UserAccountController {
         userService.updateUser(currentUser);
 
         return "redirect:/user";
+    }
+
+    @PostMapping("/user/passwd")
+    public String changePasswd(@ModelAttribute("user") User user) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        User currentUser = userService.getUserByEmail(currentPrincipalName);
+
+        currentUser.setPassword(userService.encodePasswd(user.getPassword()));
+
+
+
+        userService.updateUser(currentUser);
+        return "redirect:/user?success";
     }
 }

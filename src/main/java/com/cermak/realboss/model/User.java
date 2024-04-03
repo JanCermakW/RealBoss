@@ -44,6 +44,11 @@ public class User {
     @OneToMany(mappedBy = "realman", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Property> properties = new ArrayList<>();
 
+    @Column(name = "verification_code")
+    private String verificationCode;
+
+    private boolean enabled;
+
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,7 +57,8 @@ public class User {
         this.roles = roles;
     }
 
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles, String phone, String city, String postNum, String street, String profilePicturePath, List<UserRelation> userRelations) {
+    public User(Long id, String firstName, String lastName, String email, String password, Collection<Role> roles, String phone, String city, String postNum, String street, String profilePicturePath, List<UserRelation> userRelations, List<Property> properties, String verificationCode, boolean enabled) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -64,6 +70,9 @@ public class User {
         this.street = street;
         this.profilePicturePath = profilePicturePath;
         this.userRelations = userRelations;
+        this.properties = properties;
+        this.verificationCode = verificationCode;
+        this.enabled = enabled;
     }
 
     public User() {
@@ -172,5 +181,21 @@ public class User {
 
     public void setProperties(List<Property> properties) {
         this.properties = properties;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

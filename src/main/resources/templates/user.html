@@ -118,6 +118,20 @@
                                 <button type="submit" class="btn btn-primary mt-2">Náhrát obrázek</button>
                             </div>
                         </form>
+                        <br>
+                        <h3>Změnit heslo</h3>
+                        <form th:action="@{/user/passwd}" method="post" th:object="${user}">
+                            <div class="form-group">
+                                <label class="control-label" for="passwd">
+                                    Heslo
+                                </label>
+                                <input id="passwd" type="password" th:field="*{password}" class="form-control" required autofocus="autofocus">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary mt-2">Změnit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
