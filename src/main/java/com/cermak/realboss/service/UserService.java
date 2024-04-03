@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
     User save(UserRegistrationDto registrationDto);
-    User saveUserWithRelation(User user);
+    User saveUserWithRelation(User user) throws MessagingException, UnsupportedEncodingException;
     List<User> getAllUsers();
 
     User getUserById(Long id);

@@ -63,17 +63,28 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User saveUserWithRelation(User user) {
-        // Ensure that the password is not null or empty before encoding
-        if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            // Handle the case where the password is null or empty
-            throw new IllegalArgumentException("Password cannot be null or empty");
-        }
+    public User saveUserWithRelation(User user) throws MessagingException, UnsupportedEncodingException {
+        String password = PasswordGenerator.generateRandomPassword(12);
 
-        // Encode the password using BCryptPasswordEncoder
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        String content = "Milý [[name]],<br>"
+                + "Zde zasíláme nové heslo k vašemu účtu, ihned po přihlášení si ho změňte!!:<br>"
+                + "<h3>[[password]]</h3>"
+                + "Děkujeme,<br>"
+                + "Realboss team.";
+        String subject = "Nový účet - Realboss";
+
+        content = content.replace("[[name]]", user.getFirstName() + " " + user.getLastName());
+        content = content.replace("[[password]]", password);
+
+        sendEmail(user, content, subject);
+
+        String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER").get()));
+
+        String randomCode = PasswordGenerator.generateRandomPassword(64);
+        user.setVerificationCode(randomCode);
+        user.setEnabled(false);
 
         return userRepository.save(user);
     }

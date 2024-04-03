@@ -1,5 +1,7 @@
 package com.cermak.realboss.web;
 
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import com.cermak.realboss.model.User;
 import com.cermak.realboss.service.UserRelationService;
@@ -10,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -40,7 +43,7 @@ public class RealmanController {
     }
 
     @PostMapping("/addUser")
-    public String addUser(@ModelAttribute User newUser, Model model) {
+    public String addUser(@ModelAttribute User newUser, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         // Get currently logged-in user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -50,10 +53,19 @@ public class RealmanController {
         // Save the new user to the database
         userService.saveUserWithRelation(newUser);
 
+        User user = userService.getUserByEmail(newUser.getEmail());
+
+        userService.sendVerificationEmail(user, getSiteURL(request));
+
         // Create a user relation between the logged-in realman and the newly added user
         userRelationService.createRelation(realman, newUser);
 
         return "redirect:/realman/users";
+    }
+
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
     }
 
     @GetMapping("/users/delete/{id}")
