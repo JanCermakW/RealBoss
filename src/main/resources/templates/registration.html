@@ -14,7 +14,13 @@
         <div class="col-md-6 offset-md-3 card p-5">
             <div th:if="${param.success}">
                 <div class="alert alert-info">
-                    úspěšně jste se zaregistrovali do naší aplikace, zkontrolujte si email a aktivujte účet!
+                    Úspěšně jste se zaregistrovali do naší aplikace, zkontrolujte si email a aktivujte účet!
+                </div>
+            </div>
+
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    Uživatel je již zaregistrovaný!
                 </div>
             </div>
 

@@ -42,6 +42,10 @@ public class UserRegistrationController {
 
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+        if (userService.getUserByEmail(registrationDto.getEmail()) != null) {
+            return "redirect:/registration?error";
+        }
+
         userService.save(registrationDto);
 
         User currentUser = userService.getUserByEmail(registrationDto.getEmail());
