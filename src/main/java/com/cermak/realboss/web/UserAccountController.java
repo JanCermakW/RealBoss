@@ -82,6 +82,10 @@ public class UserAccountController {
 
         User currentUser = userService.getUserByEmail(currentPrincipalName);
 
+        if (!userService.validatePassword(user.getPassword())) {
+            return "redirect:/user?errorPasswd";
+        }
+
         currentUser.setPassword(userService.encodePasswd(user.getPassword()));
 
 

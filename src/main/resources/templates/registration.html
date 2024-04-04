@@ -24,6 +24,12 @@
                 </div>
             </div>
 
+            <div th:if="${param.errorPasswd}">
+                <div class="alert alert-danger">
+                    Heslo musí mít minimálně 8 znaků a jedno velké písmeno!
+                </div>
+            </div>
+
             <h1>Registrace</h1>
             <form th:action="@{/registration}" method="post" th:object="${user}">
                 <div class="form-group">
@@ -48,7 +54,7 @@
                     <label class="control-label" for="password">
                         Heslo
                     </label>
-                    <input id="password" class="form-control" type="password" th:field="*{password}" required autofocus="autofocus" minlength="5" placeholder="Zadejte heslo">
+                    <input id="password" class="form-control" type="password" th:field="*{password}" required autofocus="autofocus" minlength="8" placeholder="Zadejte heslo">
                 </div>
 
                 <div class="form-group mt-4 d-flex justify-content-center align-items-start flex-column">

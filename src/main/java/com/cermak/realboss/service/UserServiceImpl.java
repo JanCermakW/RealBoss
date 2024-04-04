@@ -26,6 +26,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -240,5 +242,13 @@ public class UserServiceImpl implements UserService{
 
             return true;
         }
+    }
+
+    @Override
+    public boolean validatePassword(String password) {
+        String regex = "^(?=.*[A-Z]).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/registration")
@@ -44,6 +46,10 @@ public class UserRegistrationController {
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         if (userService.getUserByEmail(registrationDto.getEmail()) != null) {
             return "redirect:/registration?error";
+        }
+
+        if (!userService.validatePassword(registrationDto.getPassword())) {
+            return "redirect:/registration?errorPasswd";
         }
 
         userService.save(registrationDto);

@@ -37,4 +37,5 @@ public interface UserService extends UserDetailsService {
     boolean verifyForgotPasswd(String verificationCode);
 
     void sendEmail(User user, String content, String subject) throws MessagingException, UnsupportedEncodingException;
+    boolean validatePassword(String password);
 }
