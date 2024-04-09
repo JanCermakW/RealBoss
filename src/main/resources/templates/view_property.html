@@ -13,14 +13,14 @@
         <img th:src="${property.mainPicturePath}" alt="MainPic" class="img-fluid rounded card">
         <h1 th:text="${property.name}"></h1>
         <h4 th:text="${property.city} + ', ' + ${property.street}"></h4>
-        <h1 th:text="${property.price} + ' Kč'"></h1>
+        <h1 th:text="${#strings.replace(#numbers.formatCurrency(property.price), ',00', '')}"></h1>
         <p th:text="${property.description}"></p>
         <div class="row">
             <div class="col-md">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <label class="propertyAttrLabel">Celková cena:</label>
-                        <span th:text="${property.price} + ' Kč'" class="propertyAttrVal"></span>
+                        <span th:text="${#strings.replace(#numbers.formatCurrency(property.price), ',00', '')}" class="propertyAttrVal"></span>
                     </li>
                     <li th:if="${not #strings.isEmpty(property.priceNote)}" class="list-group-item">
                         <label class="propertyAttrLabel">Poznámka k ceně:</label>

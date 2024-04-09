@@ -155,7 +155,7 @@
                                 <tr th:each = "property: ${userProperties}">
                                     <td class="align-middle"><img th:src="${property.mainPicturePath}" alt="MainPic" width="60"></td>
                                     <td class="align-middle" th:text="${property.name}"></td>
-                                    <td class="align-middle" th:text="${property.price}"></td>
+                                    <td class="align-middle" th:text="${#strings.replace(#numbers.formatCurrency(property.price), ',00', '')}"></td>
                                     <td class="align-middle" th:text="${property.city}"></td>
                                     <td class="align-middle" th:text="${property.street}"></td>
                                     <td class="align-middle">

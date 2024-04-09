@@ -21,7 +21,7 @@
             <div class="alert alert-danger">Uživatel, kterého chcete přidat k nemovitosti není váš zákazník!</div>
         </div>
     </div>
-    <div class="card">
+    <div class="card mb-2">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -40,7 +40,7 @@
                     <tr th:each = "property: ${userProperties}">
                         <td class="align-middle"><img th:src="${property.mainPicturePath}" alt="MainPic" width="60"></td>
                         <td class="align-middle" th:text="${property.name}"></td>
-                        <td class="align-middle" th:text="${property.price}"></td>
+                        <td class="align-middle" th:text="${#strings.replace(#numbers.formatCurrency(property.price), ',00', '')}"></td>
                         <td class="align-middle" th:text="${property.city}"></td>
                         <td class="align-middle" th:text="${property.street}"></td>
                         <td class="align-middle">
