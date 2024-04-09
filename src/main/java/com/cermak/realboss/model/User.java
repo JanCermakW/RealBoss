@@ -42,6 +42,9 @@ public class User {
     private List<UserRelation> userRelations;
 
     @OneToMany(mappedBy = "realman", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRelation> realmanRelations;
+
+    @OneToMany(mappedBy = "realman", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Property> properties = new ArrayList<>();
 
     @Column(name = "verification_code")
@@ -197,5 +200,13 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<UserRelation> getRealmanRelations() {
+        return realmanRelations;
+    }
+
+    public void setRealmanRelations(List<UserRelation> realmanRelations) {
+        this.realmanRelations = realmanRelations;
     }
 }

@@ -1,9 +1,11 @@
 package com.cermak.realboss.service;
 
 import com.cermak.realboss.exception.UserNotFoundException;
+import com.cermak.realboss.model.Property;
 import com.cermak.realboss.model.Role;
 import com.cermak.realboss.model.User;
 import com.cermak.realboss.model.UserRelation;
+import com.cermak.realboss.repository.PropertyRepository;
 import com.cermak.realboss.repository.RoleRepository;
 import com.cermak.realboss.repository.UserRelationRepository;
 import com.cermak.realboss.repository.UserRepository;
@@ -26,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -36,6 +39,9 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PropertyRepository propertyRepository;
     @Autowired
     private UserRelationRepository userRelationRepository;
     @Autowired
@@ -135,7 +141,25 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            List<Property> properties = propertyRepository.findByCustomer(user);
+            List<Property> propertiesRealman = propertyRepository.findByRealman(user);
+            if (properties.isEmpty() && propertiesRealman.isEmpty()) {
+                userRepository.deleteById(id);
+            } else if (!properties.isEmpty()){
+                for (Property property : properties) {
+                    property.setCustomer(null);
+                    propertyRepository.save(property);
+                }
+                userRepository.deleteById(id);
+            } else if (!propertiesRealman.isEmpty()) {
+                for (Property property : propertiesRealman) {
+                    propertyRepository.delete(property);
+                }
+                userRepository.deleteById(id);
+            }
+        }
     }
 
     @Override

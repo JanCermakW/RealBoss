@@ -12,17 +12,13 @@ public class Role {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "role")
-    private List<UserRelation> userRelations;
-
     public Role(String name) {
         super();
         this.name = name;
     }
 
-    public Role(Long id, String name, List<UserRelation> userRelations) {
+    public Role(Long id, String name) {
         this.name = name;
-        this.userRelations = userRelations;
     }
 
     public Role() {
@@ -43,13 +39,5 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<UserRelation> getUserRelations() {
-        return userRelations;
-    }
-
-    public void setUserRelations(List<UserRelation> userRelations) {
-        this.userRelations = userRelations;
     }
 }

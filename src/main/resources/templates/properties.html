@@ -10,11 +10,15 @@
 
 <div class="container mt-5">
     <div class="row mb-4">
-        <div class="col-12 text-left mb-2"> <!-- Adjust the column size based on your layout -->
+        <div class="col-12 text-left mb-2">
             <h1>List všech nemovitostí</h1>
         </div>
         <div class="col-12">
             <a th:href="@{/realman/properties/create}" class="btn btn-primary btn-sm mb-3 p-2 fw-bold">Přidat nemovitost</a>
+        </div>
+        <!-- error message -->
+        <div class="col-12" th:if="${param.userNotCustomer}">
+            <div class="alert alert-danger">Uživatel, kterého chcete přidat k nemovitosti není váš zákazník!</div>
         </div>
     </div>
     <div class="card">

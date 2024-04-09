@@ -18,14 +18,9 @@ public class UserRelation {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
     public UserRelation(User realman, User user, Role role) {
         this.realman = realman;
         this.user = user;
-        this.role = role;
     }
 
     public UserRelation() {
@@ -54,13 +49,5 @@ public class UserRelation {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }

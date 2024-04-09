@@ -3,8 +3,10 @@ package com.cermak.realboss.web;
 import com.cermak.realboss.model.Property;
 import com.cermak.realboss.model.Role;
 import com.cermak.realboss.model.User;
+import com.cermak.realboss.model.UserRelation;
 import com.cermak.realboss.service.FileStorageService;
 import com.cermak.realboss.service.PropertyService;
+import com.cermak.realboss.service.UserRelationService;
 import com.cermak.realboss.service.UserService;
 import org.aspectj.weaver.patterns.PerObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class PropertyController {
 
     @Autowired
     private PropertyService propertyService;
+
+    @Autowired
+    private UserRelationService userRelationService;
 
     @Autowired
     private UserService userService;
@@ -61,7 +66,6 @@ public class PropertyController {
             return "properties";
         }
 
-        // Get currently logged-in user
         User currentUser = userService.getUserByEmail(principal.getName());
 
         property.setRealman(currentUser);
@@ -69,20 +73,35 @@ public class PropertyController {
         String profilePicturePath = fileStorageService.storeFile(file);
         property.setMainPicturePath("/img/" + profilePicturePath);
 
-        // Save the property
         propertyService.saveProperty(property);
 
         return "redirect:/realman/properties";
     }
 
     @PostMapping("/properties/addUserProperty/{id}")
-    public String createRelationUserProperty(@ModelAttribute User newUser, @PathVariable Long id, Model model) {
+    public String createRelationUserProperty(@ModelAttribute User newUser, @PathVariable Long id, Principal principal) {
         Property property = propertyService.getPropertyById(id);
         User user = userService.getUserByEmail(newUser.getEmail());
-        property.setCustomer(user);
-        propertyService.saveProperty(property);
 
-        return "redirect:/realman/properties";
+        User currentUser = userService.getUserByEmail(principal.getName());
+
+        List<User> AllCustomers = userRelationService.getUsersByRealman(currentUser);
+
+        if (user == null) {
+            property.setCustomer(null);
+            propertyService.saveProperty(property);
+            return "redirect:/realman/properties";
+        }
+
+        for (User userLoop : AllCustomers) {
+            if (userLoop.getId().equals(user.getId())) {
+                property.setCustomer(user);
+                propertyService.saveProperty(property);
+
+                return "redirect:/realman/properties";
+            }
+        }
+        return "redirect:/realman/properties?userNotCustomer";
     }
 
     @GetMapping("/properties/delete/{id}")
