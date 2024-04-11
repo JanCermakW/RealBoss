@@ -58,9 +58,9 @@ public class MainController {
         return "admin";
     }
 
-    /*
+
     @GetMapping("/error")
     public String error() {
         return "error";
-    }*/
+    }
 }

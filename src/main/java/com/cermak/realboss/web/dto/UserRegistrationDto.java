@@ -6,6 +6,8 @@ public class UserRegistrationDto {
     private String email;
     private String password;
 
+    private String Role;
+
     public UserRegistrationDto(String firstName, String lastName, String email, String password) {
         super();
         this.firstName = firstName;
@@ -50,4 +52,11 @@ public class UserRegistrationDto {
         this.password = password;
     }
 
+    public String getRole() {
+        return Role;
+    }
+
+    public void setRole(String role) {
+        Role = role;
+    }
 }

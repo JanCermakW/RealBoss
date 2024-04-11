@@ -5,8 +5,12 @@
 <body>
 <footer class="footer" th:fragment="footer">
     <div class="container">
-        <span class="text-muted">@2024 Realboss JanCermak</span>
+        <span id="year" class="text-muted"></span> RealBoss JanCermak
     </div>
+    <script>
+        var currentYear = new Date().getFullYear();
+        document.getElementById("year").textContent = "@" + currentYear;
+    </script>
 </footer>
 </body>
 </html>

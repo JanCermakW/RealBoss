@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService{
                 registrationDto.getLastName(),
                 registrationDto.getEmail(),
                 passwordEncoder.encode(registrationDto.getPassword()),
-                Arrays.asList(roleRepository.findByName("ROLE_USER").get())
+                Arrays.asList(roleRepository.findByName(registrationDto.getRole()).get())
         );
 
         String randomCode = PasswordGenerator.generateRandomPassword(64);

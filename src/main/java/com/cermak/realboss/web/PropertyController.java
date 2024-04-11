@@ -70,6 +70,10 @@ public class PropertyController {
 
         property.setRealman(currentUser);
 
+        if (file.isEmpty()) {
+            return "redirect:/realman/properties/create?ImgEmpty";
+        }
+
         String profilePicturePath = fileStorageService.storeFile(file);
         property.setMainPicturePath("/img/" + profilePicturePath);
 

@@ -37,8 +37,8 @@
                             <td th:text="${user.lastName}"></td>
                             <td th:text="${user.email}"></td>
                             <td>
-                                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-primary">Upravit</a>
-                                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Smazat</a>
+                                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-primary mb-1">Upravit</a>
+                                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-danger mb-1">Smazat</a>
                             </td>
                         </tr>
                     </tbody>
