@@ -34,7 +34,15 @@
                     </thead>
                     <tbody>
                     <tr th:each = "user: ${connectedUsers}">
-                        <td><img th:src="${user.profilePicturePath}" alt="ProfPic" width="60"></td>
+                        <td>
+                            <img th:if="${not #strings.isEmpty(user.profilePicturePath)}"
+                                 th:src="${user.profilePicturePath}"
+                                 alt="ProfPic"
+                                 width="60">
+                            <i th:unless="${not #strings.isEmpty(user.profilePicturePath)}"
+                               class="fa-solid fa-user"
+                               style="font-size: 50px;"></i>
+                        </td>
                         <td class="align-middle" th:text="${user.firstName}"></td>
                         <td class="align-middle" th:text="${user.lastName}"></td>
                         <td class="align-middle" th:text="${user.email}"></td>
