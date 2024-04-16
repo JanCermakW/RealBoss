@@ -26,14 +26,11 @@ public class RealmanController {
 
     @GetMapping("/users")
     public String listConnectedUsers(Model model) {
-        // Get currently logged-in user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        // Assuming you have a method in your UserService to find a user by email
         User realman = userService.getUserByEmail(currentPrincipalName);
 
-        // Get the list of connected ROLE_USER users
         List<User> connectedUsers = userRelationService.getUsersByRealman(realman);
 
         model.addAttribute("connectedUsers", connectedUsers);
@@ -44,20 +41,18 @@ public class RealmanController {
 
     @PostMapping("/addUser")
     public String addUser(@ModelAttribute User newUser, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
-        // Get currently logged-in user
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
         User realman = userService.getUserByEmail(currentPrincipalName);
 
-        // Save the new user to the database
         userService.saveUserWithRelation(newUser);
 
         User user = userService.getUserByEmail(newUser.getEmail());
 
         userService.sendVerificationEmail(user, getSiteURL(request));
 
-        // Create a user relation between the logged-in realman and the newly added user
         userRelationService.createRelation(realman, newUser);
 
         return "redirect:/realman/users";
@@ -76,7 +71,6 @@ public class RealmanController {
 
     @PostMapping("/createRelation")
     public String createRelation(@ModelAttribute User newUser, Model model) {
-        // Get currently logged-in user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
@@ -85,7 +79,6 @@ public class RealmanController {
         User user = userService.getUserByEmail(newUser.getEmail());
 
         if (realman != null && user != null) {
-            // Create a user relation between the logged-in realman and the chosen user
             userRelationService.createRelation(realman, user);
         }
 

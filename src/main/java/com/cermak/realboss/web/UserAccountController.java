@@ -40,7 +40,6 @@ public class UserAccountController {
 
     @PostMapping("/user")
     public String updateUser(@ModelAttribute("user") User user) {
-        //get user from db
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
@@ -54,21 +53,17 @@ public class UserAccountController {
         currentUser.setStreet(user.getStreet());
         currentUser.setPostNum(user.getPostNum());
 
-        //save updated user objc
         userService.updateUser(currentUser);
         return "redirect:/user?success";
     }
 
     @PostMapping("/user/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, Principal principal) {
-        // Get the currently logged-in user
         User currentUser = userService.getUserByEmail(principal.getName());
 
-        // Save the file and update the user's profile picture path
         String profilePicturePath = fileStorageService.storeFile(file);
         currentUser.setProfilePicturePath("/img/" + profilePicturePath);
 
-        // Save the updated user
         userService.updateUser(currentUser);
 
         return "redirect:/user";

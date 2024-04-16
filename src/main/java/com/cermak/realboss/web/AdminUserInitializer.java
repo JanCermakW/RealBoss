@@ -29,22 +29,19 @@ public class AdminUserInitializer implements CommandLineRunner {
         createRoleIfNotExists("ROLE_ADMIN");
         createRoleIfNotExists("ROLE_USER");
         createRoleIfNotExists("ROLE_REALMAN");
-        // Check if admin user already exists
+
         User user = userService.getUserByEmail("admin@example.com");
         if (user == null) {
-            // Create the default admin user
+
             User adminUser = new User();
             adminUser.setFirstName("Admin");
             adminUser.setLastName("User");
             adminUser.setEmail("admin@example.com");
             adminUser.setEnabled(true);
             adminUser.setPassword(passwordEncoder.encode("admin"));
-            // Set other properties if needed
 
-            // Assign the "ROLE_ADMIN" role to the admin user
             adminUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_ADMIN").get()));
 
-            // Save the admin user to the database
             userService.saveUserStartup(adminUser);
         }
     }
