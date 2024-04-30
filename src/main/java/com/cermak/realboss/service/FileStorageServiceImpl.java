@@ -28,6 +28,11 @@ public class FileStorageServiceImpl implements FileStorageService{
         try {
             Path filePath = Paths.get(uploadDir).resolve(fileName);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            uploadDir = "target/classes/static/img";
+            filePath = Paths.get(uploadDir).resolve(fileName);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
             return fileName;
         } catch (IOException e) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", e);

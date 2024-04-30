@@ -21,6 +21,7 @@
                 </div>
                 <div class="col-md-6">
                     <h3>Základní info</h3>
+                    <p>*Tyto položky jsou povinné</p>
                     <div class="form-group mt-2">
                         <label class="control-label" for="name">
                             Název
@@ -97,13 +98,13 @@
                         <label class="control-label" for="usableArea">
                             Užitná plocha (udávejte v m<sup>2</sup>)
                         </label>
-                        <input id="usableArea" class="form-control" th:field="*{usableArea}" autofocus="autofocus">
+                        <input type="number" id="usableArea" class="form-control" th:field="*{usableArea}" autofocus="autofocus">
                     </div>
                     <div class="form-group mt-2">
                         <label class="control-label" for="floorArea">
                             Plocha podlahová (udávejte v m<sup>2</sup>)
                         </label>
-                        <input id="floorArea" class="form-control" th:field="*{floorArea}" autofocus="autofocus">
+                        <input type="number" id="floorArea" class="form-control" th:field="*{floorArea}" autofocus="autofocus">
                     </div>
                 </div>
             </div>
@@ -119,13 +120,13 @@
                         <label class="control-label" for="basement">
                             Sklep (udávejte v m<sup>2</sup>)
                         </label>
-                        <input id="basement" class="form-control" th:field="*{basement}" autofocus="autofocus">
+                        <input type="number" id="basement" class="form-control" th:field="*{basement}" autofocus="autofocus">
                     </div>
                     <div class="form-group mt-2">
                         <label class="control-label" for="approvalYear">
                             Rok kolaudace
                         </label>
-                        <input id="approvalYear" class="form-control" th:field="*{approvalYear}" autofocus="autofocus">
+                        <input type="number" id="approvalYear" class="form-control" th:field="*{approvalYear}" autofocus="autofocus">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -133,7 +134,7 @@
                         <label class="control-label" for="reconstructionYear">
                             Rok rekonstrukce
                         </label>
-                        <input id="reconstructionYear" class="form-control" th:field="*{reconstructionYear}" autofocus="autofocus">
+                        <input type="number" id="reconstructionYear" class="form-control" th:field="*{reconstructionYear}" autofocus="autofocus">
                     </div>
                     <div class="form-group mt-2">
                         <label class="control-label" for="water">
